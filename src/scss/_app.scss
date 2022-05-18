@@ -36,8 +36,7 @@ td{
 			display: flex;
 			flex-direction: column;
 			cursor: pointer;
-			&:first-child img,
-			&:last-child img {
+			 img {
 				width: 7.79px;
 				margin: 0 auto;
 			}

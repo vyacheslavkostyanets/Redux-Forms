@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import InvoiceAdress from './modals/InvoiceAdress';
+import Contact from './modals/Contact';
+import BankData from './modals/BankData';
 
 const customStyles = {
   content: {
@@ -17,6 +20,11 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export function AppModal() {
+  const form = [InvoiceAdress, Contact, BankData];
+
+  const [numberOfForm, setNumberOfForm] = useState(0);
+
+
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -32,6 +40,12 @@ export function AppModal() {
   function closeModal() {
     setIsOpen(false);
   }
+  function changeModal() {
+    setNumberOfForm(prev => prev + 1)
+  }
+
+
+  const GetModal = form[numberOfForm];
 
   return (
     <div>
@@ -45,14 +59,12 @@ export function AppModal() {
       >
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
         <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        <div>
+
+          <GetModal />
+          <button onClick={() => changeModal()}>Next</button>
+        </div>
+
       </Modal>
     </div>
   );
