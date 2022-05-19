@@ -13,6 +13,9 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    width: '36.5em',
+    height: '32.1em',
+    padding: '10px'
   },
 };
 
@@ -20,6 +23,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export function AppModal() {
+
   const form = [InvoiceAdress, Contact, BankData];
 
   const [numberOfForm, setNumberOfForm] = useState(0);
@@ -57,12 +61,18 @@ export function AppModal() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>
+        <div className="close-form"><button onClick={closeModal} className="close-form__btn">X</button></div>
+        <div className="wrapper-form">
+          <form className="form">
+            <GetModal />
+            <span className='form__control'>
+              <button class="form__control__cancel" onClick={closeModal}>Cancel</button>
+              <button class="form__control__prev" onClick={closeModal}>Prev</button>
 
-          <GetModal />
-          <button onClick={() => changeModal()}>Next</button>
+              <input type="submit" value="Save" />
+              <button onClick={() => changeModal()}>Next</button>
+            </span>
+          </form>
         </div>
 
       </Modal>

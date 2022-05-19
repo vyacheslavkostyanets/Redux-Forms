@@ -7,16 +7,21 @@ const InvoiceAdress = () => {
     Additional: "",
     Street: "",
     PostalCode: "",
+    City: "Ukraine",
   };
   const [formName, setFormName] = useState(defaultFormValue);
   function handleChangeInput(event) {
     setFormName({ ...formName, [event.target.name]: event.target.value });
   }
+  function handleChangeSelect(event) {
+    setFormName({ ...formName, City: event.target.value });
+  }
 
   return (
-    <form>
+    <div>
+      <h2>Invoice Address </h2>
       <label>
-        Company*
+        <span>Company*</span>
         <input
           type="text"
           value={formName.Company}
@@ -25,7 +30,8 @@ const InvoiceAdress = () => {
         />
       </label>
       <label>
-        Name*
+        <span>Name*</span>
+
         <input
           type="text"
           value={formName.Name}
@@ -34,7 +40,7 @@ const InvoiceAdress = () => {
         />
       </label>
       <label>
-        Additional
+        <span>Additional</span>
         <input
           type="text"
           value={formName.Additional}
@@ -43,7 +49,7 @@ const InvoiceAdress = () => {
         />
       </label>
       <label>
-        Street
+        <span>Street</span>
         <input
           type="text"
           value={formName.Street}
@@ -52,7 +58,7 @@ const InvoiceAdress = () => {
         />
       </label>
       <label>
-        Postal Code
+        <span>Postal Code</span>
         <input
           type="text"
           value={formName.PostalCode}
@@ -61,12 +67,15 @@ const InvoiceAdress = () => {
         />
       </label>
       <label>
-        Country
-        <select onChange={(event) => handleChangeInput(event)}>
-          <option disabled defaultValue>
-            Ehne mehne Muh
+        <span>Country</span>
+        <select
+          className="form__select"
+          value={formName.City}
+          onChange={handleChangeSelect}
+        >
+          <option selected value="Ukraine">
+            Ukraine
           </option>
-          <option value="China">China</option>
           <option value="China">China</option>
           <option value="Israel">Israel</option>
           <option value="USA">USA</option>
@@ -74,8 +83,7 @@ const InvoiceAdress = () => {
         </select>
       </label>
       <br />
-      <input type="submit" value="Отправить" />
-    </form>
+    </div>
   );
 };
 
