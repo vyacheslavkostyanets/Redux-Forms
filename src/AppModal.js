@@ -4,11 +4,14 @@ import Modal from 'react-modal';
 import InvoiceAdress from './modals/InvoiceAdress';
 import Contact from './modals/Contact';
 import BankData from './modals/BankData';
+import { useDispatch } from "react-redux";
+import { addFormData } from './features/FormSlice';
+
 
 
 
 export function AppModal() {
-
+  const dispatch = useDispatch();
   const customStyles = {
     content: {
       top: '50%',
@@ -42,8 +45,9 @@ export function AppModal() {
     Homepage: ""
   };
   const [formName, setFormName] = useState(defaultFormValue);
-  let subtitle;
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [numberOfForm, setNumberOfForm] = useState(0);
   function handleChangeInput(event) {
     setFormName({ ...formName, [event.target.name]: event.target.value });
   }
@@ -51,29 +55,37 @@ export function AppModal() {
     setFormName({ ...formName, City: event.target.value });
   }
 
-  const [numberOfForm, setNumberOfForm] = useState(0);
-
   function openModal() {
     setIsOpen(true);
   }
-
+  let subtitle;
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = '#f00';
   }
 
-  function closeModal() {
-    setFormName(defaultFormValue)
+  function closeModal(event) {
+
+    event.preventDefault()
     setIsOpen(false);
+    setFormName(defaultFormValue)
+    numberOfForm(0);
   }
-  function nextModal(Event) {
-    Event.preventDefault()
+  function nextModal(event) {
+    event.preventDefault()
     setNumberOfForm(prev => prev + 1)
   }
-  function prevModal(Event) {
-    Event.preventDefault()
+  function prevModal(event) {
+    event.preventDefault()
     setNumberOfForm(prev => prev - 1)
   }
+  function saveForm(event) {
+    event.preventDefault()
+    setIsOpen(false);
+    setNumberOfForm(0)
+    return dispatch(addFormData(formName));
+  }
+
 
   const form = [InvoiceAdress, BankData, Contact];
   const GetModal = form[numberOfForm];
@@ -93,10 +105,10 @@ export function AppModal() {
           <form className="form">
             <GetModal formName={formName} handleChangeInput={handleChangeInput} handleChangeSelect={handleChangeSelect} />
             <span className='form__control'>
-              <button class="form__control__cancel" onClick={closeModal}>Cancel</button>
-              <button class="form__control__prev" onClick={prevModal}>Prev</button>
+              <button className="form__control__cancel" onClick={closeModal}>Cancel</button>
+              {numberOfForm ? <button className="form__control__prev" onClick={prevModal}>Prev</button> : null}
 
-              {numberOfForm < (form.length - 1) ? <button onClick={nextModal}>Next</button> : <button onClick={nextModal}>Save</button>}
+              {numberOfForm < (form.length - 1) ? <button onClick={nextModal}>Next</button> : <button onClick={saveForm}>Save</button>}
             </span>
           </form>
         </div>

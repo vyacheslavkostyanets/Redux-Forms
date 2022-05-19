@@ -6,10 +6,14 @@ import "./scss/index.scss";
 import basket from "./images/Vector.svg";
 import VectorCover from "./images/VectorCover.svg";
 import { AppModal } from "./AppModal";
+import { deleteData } from "./features/FormSlice";
 
 function App() {
   const count = useSelector((state) => state.Forms.value);
   // const [isOpen, setIsOpen] = useState(false);
+  const deleteRow = (event, id) => {
+    return dispatch(deleteData(id));
+  };
 
   const dispatch = useDispatch();
   return (
@@ -33,27 +37,32 @@ function App() {
               <th>E-mail</th>
               <th>Birthday</th>
             </tr>
-            <tr>
-              <td>
-                <span className="basket">
-                  <img src={VectorCover} alt="" />
-                  <img src={basket} alt="" />
-                </span>
-              </td>
-              <td>Company</td>
-              <td>Name</td>
-              <td>Edditional</td>
-              <td>Street</td>
-              <td>Postal Code</td>
 
-              <td>Country</td>
-              <td>IBAN</td>
-              <td>BIC</td>
-              <td>Bank-name</td>
-              <td>Fax</td>
-              <td>E-mail</td>
-              <td>Birthday</td>
-            </tr>
+            {count.map((elem, i) => (
+              <tr key={elem + i}>
+                <td>
+                  <span
+                    className="basket"
+                    onClick={(event) => deleteRow(event, i)}
+                  >
+                    <img src={VectorCover} alt="" />
+                    <img src={basket} alt="" />
+                  </span>
+                </td>
+                <td>{elem.Company}</td>
+                <td>{elem.Name}</td>
+                <td>{elem.Additional}</td>
+                <td>{elem.Street}</td>
+                <td>{elem.PostalCode}</td>
+                <td>{elem.City}</td>
+                <td>{elem.Iban}</td>
+                <td>{elem.Bic}</td>
+                <td>{elem.BlankName}</td>
+                <td>{elem.Fax}</td>
+                <td>{elem.Email}</td>
+                <td>{elem.Birthday}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -57,9 +57,7 @@ const InvoiceAdress = ({ formName, handleChangeInput, handleChangeSelect }) => {
           value={formName.City}
           onChange={handleChangeSelect}
         >
-          <option selected value="Ukraine">
-            Ukraine
-          </option>
+          <option value="Ukraine">Ukraine</option>
           <option value="China">China</option>
           <option value="Israel">Israel</option>
           <option value="USA">USA</option>
