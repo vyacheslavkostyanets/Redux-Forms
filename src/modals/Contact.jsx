@@ -1,44 +1,48 @@
 import React from "react";
 
-const Contact = () => {
+const Contact = ({ formName, handleChangeInput }) => {
   return (
-    <form>
+    <div>
+      <h2>Contact</h2>
       <label>
-        1221
-        <input type="text" name="Company" />
+        <span>Fax</span>
+        <input
+          type="text"
+          value={formName.Fax}
+          name="Fax"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <label>
-        Name*
-        <input type="text" name="Name" />
+        <span>E-mail</span>
+
+        <input
+          type="text"
+          value={formName.Email}
+          name="Email"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <label>
-        Additional
-        <input type="text" name="Additional" />
+        <span>Birthday</span>
+        <input
+          type="date"
+          value={formName.Birthday}
+          name="Birthday"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <label>
-        Street
-        <input type="text" name="Street" />
-      </label>
-      <label>
-        Postal Code
-        <input type="text" name="PostalCode" />
-      </label>
-      <label>
-        Country
-        <select>
-          <option disabled defaultValue>
-            Ehne mehne Muh
-          </option>
-          <option value="China">China</option>
-          <option value="China">China</option>
-          <option value="Israel">Israel</option>
-          <option value="USA">USA</option>
-          <option value="Turkey">Turkey</option>
-        </select>
+        <span>Homepage</span>
+        <input
+          type="text"
+          value={formName.Homepage}
+          name="Homepage"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <br />
-      <input type="submit" value="Отправить" />
-    </form>
+    </div>
   );
 };
 

@@ -1,27 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-const InvoiceAdress = () => {
-  const defaultFormValue = {
-    Company: "",
-    Name: "",
-    Additional: "",
-    Street: "",
-    PostalCode: "",
-    City: "Ukraine",
-  };
-  const [formName, setFormName] = useState(defaultFormValue);
-  function handleChangeInput(event) {
-    setFormName({ ...formName, [event.target.name]: event.target.value });
-  }
-  function handleChangeSelect(event) {
-    setFormName({ ...formName, City: event.target.value });
-  }
-
+const InvoiceAdress = ({ formName, handleChangeInput, handleChangeSelect }) => {
   return (
     <div>
       <h2>Invoice Address </h2>
       <label>
-        <span>Company*</span>
+        <span>Company *</span>
         <input
           type="text"
           value={formName.Company}
@@ -30,7 +14,7 @@ const InvoiceAdress = () => {
         />
       </label>
       <label>
-        <span>Name*</span>
+        <span>Name *</span>
 
         <input
           type="text"

@@ -1,44 +1,39 @@
 import React from "react";
 
-const BankData = () => {
+const BankData = ({ formName, handleChangeInput }) => {
   return (
-    <form>
+    <div>
+      <h2>BankData</h2>
       <label>
-        33
-        <input type="text" name="Company" />
+        <span>IBAN *</span>
+        <input
+          type="text"
+          value={formName.Iban}
+          name="Iban"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <label>
-        Name*
-        <input type="text" name="Name" />
+        <span>BIC *</span>
+
+        <input
+          type="text"
+          value={formName.Bic}
+          name="Bic"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <label>
-        Additional
-        <input type="text" name="Additional" />
-      </label>
-      <label>
-        Street
-        <input type="text" name="Street" />
-      </label>
-      <label>
-        Postal Code
-        <input type="text" name="PostalCode" />
-      </label>
-      <label>
-        Country
-        <select>
-          <option disabled defaultValue>
-            Ehne mehne Muh
-          </option>
-          <option value="China">China</option>
-          <option value="China">China</option>
-          <option value="Israel">Israel</option>
-          <option value="USA">USA</option>
-          <option value="Turkey">Turkey</option>
-        </select>
+        <span>Bank name *</span>
+        <input
+          type="text"
+          value={formName.BlankName}
+          name="BlankName"
+          onChange={(event) => handleChangeInput(event)}
+        />
       </label>
       <br />
-      <input type="submit" value="Отправить" />
-    </form>
+    </div>
   );
 };
 
