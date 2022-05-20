@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import InvoiceAdress from './modals/InvoiceAdress';
 import Contact from './modals/Contact';
 import BankData from './modals/BankData';
 import { useDispatch } from "react-redux";
 import { addFormData } from './features/FormSlice';
-
-
 
 
 export function AppModal() {
@@ -44,10 +41,20 @@ export function AppModal() {
     Birthday: "",
     Homepage: ""
   };
-  const [formName, setFormName] = useState(defaultFormValue);
 
+  const clickForm = {
+    Company: false,
+    Name: false,
+    Iban: false,
+    Bic: false,
+    BlankName: false,
+  };
+  const [formName, setFormName] = useState(defaultFormValue);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [numberOfForm, setNumberOfForm] = useState(0);
+  const [isClicked, setIsClicked] = useState(clickForm);
+
+
   function handleChangeInput(event) {
     setFormName({ ...formName, [event.target.name]: event.target.value });
   }
@@ -60,12 +67,10 @@ export function AppModal() {
   }
   let subtitle;
   function afterOpenModal() {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = '#f00';
   }
 
   function closeModal(event) {
-
     event.preventDefault()
     setIsOpen(false);
     setFormName(defaultFormValue)
@@ -73,18 +78,69 @@ export function AppModal() {
   }
   function nextModal(event) {
     event.preventDefault()
-    setNumberOfForm(prev => prev + 1)
+
+    setNumberOfForm(prev => {
+      if (prev === 0) {
+        if (formName.Company && formName.Name) {
+          return prev + 1
+        }
+        else {
+          return prev
+        }
+      }
+      else if (prev === 1) {
+        if (formName.BlankName && formName.Iban && formName.Bic) {
+          return prev + 1
+        }
+        else {
+          return prev
+        }
+      }
+    }
+    )
   }
   function prevModal(event) {
     event.preventDefault()
     setNumberOfForm(prev => prev - 1)
   }
+  function handleFormClick(event) {
+    switch (event.target.name) {
+      case "Company": setIsClicked({
+        ...isClicked,
+        Company: true
+      });
+        break;
+      case "Name": setIsClicked({
+        ...isClicked,
+        Name: true
+      });
+        break;
+      case "Iban": setIsClicked({
+        ...isClicked,
+        Iban: true
+      });
+        break;
+      case "Bic": setIsClicked({
+        ...isClicked,
+        Bic: true
+      });
+        break;
+      case "BlankName": setIsClicked({
+        ...isClicked,
+        BlankName: true
+      });
+        break;
+    }
+  }
   function saveForm(event) {
-    event.preventDefault()
+    event.preventDefault();
+    // setIsOpen(false);
+    // return
     setIsOpen(false);
-    setNumberOfForm(0)
+    setNumberOfForm(0);
     return dispatch(addFormData(formName));
   }
+
 
 
   const form = [InvoiceAdress, BankData, Contact];
@@ -103,12 +159,13 @@ export function AppModal() {
         <div className="close-form"><button onClick={closeModal} className="close-form__btn">X</button></div>
         <div className="wrapper-form">
           <form className="form">
-            <GetModal formName={formName} handleChangeInput={handleChangeInput} handleChangeSelect={handleChangeSelect} />
+            <GetModal handleFormClick={handleFormClick} formName={formName} handleChangeInput={handleChangeInput} handleChangeSelect={handleChangeSelect} isClicked={isClicked} />
             <span className='form__control'>
               <button className="form__control__cancel" onClick={closeModal}>Cancel</button>
               {numberOfForm ? <button className="form__control__prev" onClick={prevModal}>Prev</button> : null}
 
               {numberOfForm < (form.length - 1) ? <button onClick={nextModal}>Next</button> : <button onClick={saveForm}>Save</button>}
+
             </span>
           </form>
         </div>

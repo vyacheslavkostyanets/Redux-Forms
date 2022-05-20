@@ -1,26 +1,40 @@
 import React from "react";
 
-const InvoiceAdress = ({ formName, handleChangeInput, handleChangeSelect }) => {
+const InvoiceAdress = ({
+  formName,
+  handleChangeInput,
+  handleChangeSelect,
+  handleFormClick,
+  isClicked,
+}) => {
   return (
     <div>
       <h2>Invoice Address </h2>
+      {isClicked.Company && !formName.Company ? (
+        <span className="form-full">Add data to field "Company"</span>
+      ) : null}
       <label>
         <span>Company *</span>
         <input
+          required
           type="text"
           value={formName.Company}
           name="Company"
           onChange={(event) => handleChangeInput(event)}
+          onBlur={(event) => handleFormClick(event)}
         />
       </label>
+      {isClicked.Name && !formName.Name ? (
+        <span className="form-full">Add data to field "Name"</span>
+      ) : null}
       <label>
         <span>Name *</span>
-
         <input
           type="text"
           value={formName.Name}
           name="Name"
           onChange={(event) => handleChangeInput(event)}
+          onBlur={(event) => handleFormClick(event)}
         />
       </label>
       <label>
