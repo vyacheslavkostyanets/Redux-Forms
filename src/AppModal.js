@@ -134,11 +134,13 @@ export function AppModal() {
   }
   function saveForm(event) {
     event.preventDefault();
-    // setIsOpen(false);
-    // return
+    const data = formName;
+    setFormName(defaultFormValue)
     setIsOpen(false);
     setNumberOfForm(0);
-    return dispatch(addFormData(formName));
+    setIsClicked(clickForm);
+
+    return dispatch(addFormData(data));
   }
 
 
