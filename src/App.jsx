@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <AppModal />
 
-      <div className="table" style={{ overflowX: "auto", background: "pink" }}>
+      <div className="table">
         <table id="customers">
           <tbody>
             <tr>
